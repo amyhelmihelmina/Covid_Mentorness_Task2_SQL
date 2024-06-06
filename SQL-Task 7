@@ -1,0 +1,77 @@
+Task 7 has larger code chunk 
+
+-- CTE to count the frequency of each confirmed value per month
+WITH confirmed_counts AS (
+    SELECT 
+        EXTRACT(YEAR FROM date) AS year, 
+        EXTRACT(MONTH FROM date) AS month,
+        confirmed,
+        COUNT(confirmed) AS frequency
+    FROM covid
+    GROUP BY EXTRACT(YEAR FROM date), EXTRACT(MONTH FROM date), confirmed
+),
+-- CTE to rank the confirmed counts within each month
+ranked_confirmed AS (
+    SELECT
+        year,
+        month,
+        confirmed,
+        frequency,
+        ROW_NUMBER() OVER (PARTITION BY year, month ORDER BY frequency DESC) AS rank
+    FROM confirmed_counts
+),
+-- CTE to count the frequency of each deaths value per month
+deaths_counts AS (
+    SELECT 
+        EXTRACT(YEAR FROM date) AS year, 
+        EXTRACT(MONTH FROM date) AS month,
+        death,
+        COUNT(death) AS frequency
+    FROM covid
+    GROUP BY EXTRACT(YEAR FROM date), EXTRACT(MONTH FROM date), death
+),
+-- CTE to rank the deaths counts within each month
+ranked_deaths AS (
+    SELECT
+        year,
+        month,
+        death,
+        frequency,
+        ROW_NUMBER() OVER (PARTITION BY year, month ORDER BY frequency DESC) AS rank
+    FROM deaths_counts
+),
+-- CTE to count the frequency of each recovered value per month
+recovered_counts AS (
+    SELECT 
+        EXTRACT(YEAR FROM date) AS year, 
+        EXTRACT(MONTH FROM date) AS month,
+        recovered,
+        COUNT(recovered) AS frequency
+    FROM covid
+    GROUP BY EXTRACT(YEAR FROM date), EXTRACT(MONTH FROM date), recovered
+),
+-- CTE to rank the recovered counts within each month
+ranked_recovered AS (
+    SELECT
+        year,
+        month,
+        recovered,
+        frequency,
+        ROW_NUMBER() OVER (PARTITION BY year, month ORDER BY frequency DESC) AS rank
+    FROM recovered_counts
+)
+-- Final select to get the most frequent values for each month
+SELECT 
+    c.year, 
+    c.month, 
+    c.confirmed AS most_frequent_confirmed, 
+    c.frequency AS confirmed_frequency,
+    d.death AS most_frequent_deaths, 
+    d.frequency AS deaths_frequency,
+    r.recovered AS most_frequent_recovered, 
+    r.frequency AS recovered_frequency
+FROM ranked_confirmed c
+JOIN ranked_deaths d ON c.year = d.year AND c.month = d.month AND d.rank = 1
+JOIN ranked_recovered r ON c.year = r.year AND c.month = r.month AND r.rank = 1
+WHERE c.rank = 1
+ORDER BY c.year, c.month;
