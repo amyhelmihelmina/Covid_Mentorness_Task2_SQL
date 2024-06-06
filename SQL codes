@@ -1,6 +1,14 @@
 ## SQL codes:
 
 -- Q1. Write a code to check NULL values
+SELECT *
+FROM covid
+WHERE province IS NULL
+	OR country IS NULL
+	OR date IS NULL
+	OR confirmed IS NULL
+	OR death IS NULL
+	OR recovered IS NULL
 
 -- Q2. If NULL values are present, update them with zeros for all columns. 
 
