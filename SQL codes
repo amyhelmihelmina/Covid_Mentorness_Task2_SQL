@@ -11,6 +11,11 @@ WHERE province IS NULL
 	OR recovered IS NULL
 
 -- Q2. If NULL values are present, update them with zeros for all columns. 
+UPDATE covid
+SET
+	confirmed = COALESCE(confirmed,0),
+	death = COALESCE(death,0),
+	recovered = COALESCE(recovered,0)
 
 -- Q3. check total number of rows
 
