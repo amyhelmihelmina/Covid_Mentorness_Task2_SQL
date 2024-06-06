@@ -20,7 +20,7 @@ WHERE province IS NULL
 
 -- Q6. Find monthly average for confirmed, deaths, recovered
 
--- Q7. Find most frequent value for confirmed, deaths, recovered each month 
+-- Q7. Find most frequent value for confirmed, deaths, recovered each month: Please find solution to this task in separate file
 
 -- Q8. Find minimum values for confirmed, deaths, recovered per year
 
