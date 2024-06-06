@@ -1,4 +1,4 @@
-Task 7 has larger code chunk 
+Task 7: Find most frequent value for confirmed, deaths, recovered each month 
 
 -- CTE to count the frequency of each confirmed value per month
 WITH confirmed_counts AS (
