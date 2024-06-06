@@ -6,11 +6,11 @@ Task 2 of my remote internship with Mentorness involve exploring Covid-19 datase
 
 ## Methodology
 1. Download dataset from Mentorness database.
-2. Load CSV to pgadmin4 and use SQL to complete tasks.
+2. Load CSV to pgadmin4 and write SQL queries to complete tasks.
 3. Generate basic visualisation using Excel.
 
 ## Skills
-1. SQL:
+1. SQL: CTE, windows functions, aggregate functions
 2. Excel:
 
 ## Findings
