@@ -18,20 +18,63 @@ SET
 	recovered = COALESCE(recovered,0)
 
 -- Q3. check total number of rows
+SELECT 
+COUNT(confirmed) AS n_row
+FROM covid
 
 -- Q4. Check what is start_date and end_date
+SELECT 
+	MIN(date) AS start_date,
+	MAX(date) AS end_date
+FROM covid
 
 -- Q5. Number of month present in dataset
+SELECT 
+	DISTINCT EXTRACT(YEAR FROM date) AS year,
+	EXTRACT(MONTH FROM date) AS month
+FROM covid
+ORDER BY year, month 
 
 -- Q6. Find monthly average for confirmed, deaths, recovered
+SELECT 
+	DISTINCT EXTRACT(MONTH FROM date) AS month,
+	ROUND(AVG(confirmed),1) AS avg_confirmed,
+	ROUND(AVG(death),1) AS avg_deaths,
+	ROUND(AVG(recovered),1) AS avg_recovered
+FROM covid
+GROUP BY month
+ORDER BY month ASC
 
 -- Q7. Find most frequent value for confirmed, deaths, recovered each month: Please find solution to this task in separate file
 
 -- Q8. Find minimum values for confirmed, deaths, recovered per year
+SELECT 
+	DISTINCT EXTRACT(YEAR FROM date) AS year,
+	MIN(confirmed) AS min_confirmed,
+	MIN(death) AS min_deaths,
+	MIN(recovered) AS min_recovered
+FROM covid
+GROUP BY year
+ORDER BY year
 
 -- Q9. Find maximum values of confirmed, deaths, recovered per year
+SELECT 
+	DISTINCT EXTRACT(YEAR FROM date) AS year,
+	MAX(confirmed) AS max_confirmed,
+	MAX(death) AS max_deaths,
+	MAX(recovered) AS max_recovered
+FROM covid
+GROUP BY year
+ORDER BY year
 
 -- Q10. The total number of case of confirmed, deaths, recovered each month
+SELECT 
+	DISTINCT EXTRACT(MONTH FROM date) AS month,
+	SUM(confirmed) AS total_confirmed,
+	SUM(death) AS total_deaths,
+	SUM(recovered) AS total_recovered
+FROM covid
+GROUP BY month
 
 -- Q11. Check how corona virus spread out with respect to confirmed case
 --      (Eg.: total confirmed cases, their average, variance & STDEV )
@@ -43,7 +86,28 @@ SET
 --      (Eg.: total confirmed cases, their average, variance & STDEV )
 
 -- Q14. Find Country having highest number of the Confirmed case
+SELECT 
+	country,
+	SUM(confirmed) AS total_confirmed
+FROM covid
+GROUP BY country
+ORDER BY total_confirmed DESC
+LIMIT 1
 
 -- Q15. Find Country having lowest number of the death case
+SELECT 
+	country,
+	SUM(confirmed) AS total_confirmed
+FROM covid
+GROUP BY country
+ORDER BY total_confirmed ASC
+LIMIT 1
 
 -- Q16. Find top 5 countries having highest recovered case
+SELECT 
+	country,
+	SUM(recovered) AS total_recovered
+FROM covid
+GROUP BY country
+ORDER BY total_recovered DESC
+LIMIT 5
