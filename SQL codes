@@ -1,6 +1,6 @@
 ## SQL codes:
 
-**** Solutions for tasks 7, 11, 12, 13 are compiled in separate files
+**** Solution for task 7 is compiled in separate files
 
 -- Q1. Write a code to check NULL values
 SELECT *
@@ -78,14 +78,39 @@ SELECT
 FROM covid
 GROUP BY month
 
--- Q11. Check how corona virus spread out with respect to confirmed case
---      (Eg.: total confirmed cases, their average, variance & STDEV )
+-- Q11. Check how corona virus spread out with respect to confirmed case (Eg.: total confirmed cases, their average, variance & STDEV )
+SELECT 
+	EXTRACT(YEAR FROM date) AS year, 
+	EXTRACT(MONTH FROM date) AS month,
+	SUM(confirmed) AS total_confirmed,
+	ROUND(AVG(confirmed),2) AS avg_confirmed,
+	ROUND(VAR_SAMP(confirmed),2) AS var_confirmed,
+	ROUND(STDDEV(confirmed),2) AS stddev_confirmed
+FROM covid
+GROUP BY EXTRACT(YEAR FROM date), EXTRACT(MONTH FROM date)
+ORDER BY year, month
 
--- Q12. Check how corona virus spread out with respect to death case per month
---      (Eg.: total confirmed cases, their average, variance & STDEV )
+-- Q12. Check how corona virus spread out with respect to death case per month (Eg.: total confirmed cases, their average, variance & STDEV )
+SELECT 
+	CONCAT(EXTRACT(YEAR FROM date), '-', EXTRACT(MONTH FROM date)) AS year_month,
+	SUM(death) AS total_deaths,
+	ROUND(AVG(death),2) AS avg_deaths,
+	ROUND(VAR_SAMP(death),2) AS var_deaths,
+	ROUND(STDDEV(death),2) AS stddev_deaths
+FROM covid
+GROUP BY year_month
+ORDER BY year_month
 
--- Q13. Check how corona virus spread out with respect to recovered case
---      (Eg.: total confirmed cases, their average, variance & STDEV )
+-- Q13. Check how corona virus spread out with respect to recovered case (Eg.: total confirmed cases, their average, variance & STDEV )
+SELECT 
+	CONCAT(EXTRACT(YEAR FROM date), '-', EXTRACT(MONTH FROM date)) AS year_month,
+	SUM(recovered) AS total_recovered,
+	ROUND(AVG(recovered),2) AS avg_recovered,
+	ROUND(VAR_SAMP(recovered),2) AS var_recovered,
+	ROUND(STDDEV(recovered),2) AS stddev_recovered
+FROM covid
+GROUP BY year_month
+ORDER BY year_month
 
 -- Q14. Find Country having highest number of the Confirmed case
 SELECT 
