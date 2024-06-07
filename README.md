@@ -1,8 +1,8 @@
 # Task 2 - covid_mentorness
-Task 2 of my remote internship with Mentorness involve exploring Covid-19 dataset with SQL.
+Task 2 of my remote internship with Mentorness involve exploring Covid-19 dataset using SQL.
 
 ## Problem statement
-
+There were 16 tasks to be completed - they are included in the SQL code files.
 
 ## Methodology
 1. Download dataset from Mentorness database.
@@ -11,6 +11,4 @@ Task 2 of my remote internship with Mentorness involve exploring Covid-19 datase
 
 ## Skills
 1. SQL: CTE, windows functions, aggregate functions
-2. Excel:
-
-## Findings
+2. Excel: data sorting and filtering, data formatting
