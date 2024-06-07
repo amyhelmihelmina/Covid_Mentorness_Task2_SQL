@@ -1,5 +1,7 @@
 ## SQL codes:
 
+**** Solutions for tasks 7, 11, 12, 13 are compiled in separate files
+
 -- Q1. Write a code to check NULL values
 SELECT *
 FROM covid
